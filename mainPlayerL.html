@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulse Beat</title>
+    <link rel="icon" type="image/x-icon" href="/LOGO1.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            background:  rgba(7, 69, 69, 0.416);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        header{
+            position: relative;
+            width: 85%;
+            height: 95%;
+            /* border: 1px solid white; */
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .menu{
+            width: 25%;
+            height: 90%;
+            /* border: 1px solid white; */
+            background-color:  rgba(0, 221, 255, 0.233);
+            color: black;
+        }
+        .song{
+            width: 75%;
+            height: 90%;
+            /* border: 1px solid white; */
+            background: rgba(224, 255, 255, 0.274);
+        }
+        .controls{
+            width: 75%;
+            height: 10%;
+            /* border: 1px solid white; */
+            background: rgba(255, 255, 255, 0.326);
+            display: flex;
+            align-items: center;
+            padding: 0px 20px;
+            box-shadow: inset 0px 0px 25px 1px aqua;
+            margin-left: 25%;
+            
+        }
+        .menu h1{
+            font-size: 25px;
+            color: black;
+            margin: 7px 0px 5px 10px;
+            font-weight: 500;
+        }
+        .playlist{
+            margin: 40px 0px 0px 15px;
+            cursor: pointer;   
+        }
+        .playlist h4{
+            font-weight: 200;
+            color: gray;
+            padding-bottom: 10px;
+            transition: 0.3s;
+        }
+        .playlist h4:hover{
+            color:  black;
+        }
+        .playlist h4 .bi{
+            display: none;
+            transition: 0.3s;
+        }
+        .playlist .activemenu{
+            color: blue;
+        }
+        
+        .playlist .activemenu .bi {
+            display: inline-block;
+            position: relative;
+            left: -35px;
+        }
+        .playlist .activemenu span {
+            display: none;
+        }
+        .playlist p{
+            position: relative;
+            top: -6px;
+            display: inline-block;
+            margin-left: 30px;
+        }
+        .bullet{
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border: 1px solid black;
+            border-radius: 50%;
+        }
+        .SongMenu{
+            width: 100%;
+            height: 365px;
+            /* border: 1px solid white; */
+            margin-top: 20px;
+            padding-top: 10px;
+            overflow: auto;
+            background-color: white;
+        }
+        .SongMenu::-webkit-scrollbar{
+            display: none;
+        }
+        .SongMenu li{
+            list-style-type: none;
+            position: relative;
+            padding: 5px 0px 0px 13px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding-bottom: 10px;
+            transition: 0.3s;
+        }
+        .SongMenu li:hover{
+            color: black;
+            background-color: rgba(0, 255, 255, 0.231);
+        }
+        .SongMenu .play1{
+            transition: 0.3s;
+        }
+        .SongMenu .play1:hover{
+            font-size: 20px;
+        }
+        .SongMenu .play2{
+            transition: 0.3s;
+        }
+        .SongMenu .play2:hover{
+            font-size: 20px;
+        }
+        .SongMenu span{
+            font-size: 15px;
+            font-weight: 600;
+            color: #4c5262;
+        }
+        .SongMenu img{
+            width: 32px;
+            height: 32px;
+            margin-left: 20px;
+        }
+        .SongMenu .subtitle{
+            font-size: 10px;
+            color: #4c5262;
+        }
+        .SongMenu h5{
+            margin-left: 12px;
+            margin-right: 12px;
+            /* border: 1px solid white; */
+            width: 125px;
+            height: 32px;
+        }
+        .controls .wave{
+            width: 30px;
+            height: 30px;
+            /* border: 1px solid white; */
+            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            left: -5px;
+            margin-right: -2.5px;
+        }
+        .controls .wave .a{
+            width: 3px;
+            height: 10px;
+            background: rgb(21, 0, 255);
+            margin-right: 3px;
+            border-radius: 10px 10px 0px 0px;
+            animation: unset;
+        }
+        .controls .wave .a:nth-child(2){
+            height: 13px;
+            animation-delay: 0.4s;
+        }
+        .controls .wave .a:nth-child(3){
+            height: 8px;
+            animation-delay: 0.8s;
+        }
+        
+        @keyframes wave {
+            0%{
+                height: 10px;                
+            }
+            50%{
+                height: 15px;
+            }
+            100%{
+                height: 10px;
+            }
+        }
+        .controls .activewave .a {
+            animation: wave 0.5s infinite;
+        }
+        .controls .activewave .a:nth-child(2){
+            animation-delay: 0.4s;
+        }
+        .controls .activewave .a:nth-child(3){
+            animation-delay: 0.8s;
+        }
+    
+        .controls img{
+            width: 35px;
+            height: 35px;
+            margin-right: 10px;
+        }
+        .controls h5{
+            /* border: 1px solid white; */
+            width: 125px;
+            color: white;
+            height: 35px;
+        }
+        .controls .subtitle{
+            font-size: 10px;
+            color: #4c5262;
+        }
+        .controls .icons{
+            font-size: 20px;
+            color: black;
+            margin: 0px 20px 0px -5px; 
+        }
+        .controls .icons .bi{
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .controls .icons .bi:hover{
+            font-size: 22px;
+        }
+        .controls .music{
+             position: relative;
+             width: 43%;
+             height: 2px;
+             margin: 0px 15px 0px 10px;
+             background-color: gray ;
+            }
+        .controls .music .bar{
+            position: absolute;
+            background-color: blue;
+            width: 50%;
+            height: 100%;
+            top: 0;
+            transition: 1s;  
+        }
+        .controls .music .dot{
+            position: absolute;
+            background-color: blue;
+            width: 7px;
+            height: 7px;
+            top: -2.75px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 3px 1px black;
+            transition: 1s;
+        }
+        .controls .music .dot::before{
+            content: '';
+            position: absolute;
+            top: -5.4px;
+            left: -5.4px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            border: 1px solid aquamarine;
+            box-shadow: inset 0px 0px 3px 1px white;
+        }
+        .controls .music input{
+            position: relative;
+            width: 100%;
+            top: -7.2px;
+            left: 0px;
+            cursor: pointer;
+            z-index: 99;
+            opacity: 0;
+        }
+        #vup{
+            font-size: 20px;
+            color: black;
+            margin: 0px 20px 0px 25px; 
+            position: relative;
+            left: 30px;
+            cursor: pointer;
+        }
+        .controls .vol{
+             position: relative;
+             left: 25px;
+             width: 10%;
+             height: 2px;
+             margin: 0px 15px 0px 0px;
+             background-color: gray ;
+            }
+        .controls .vol .bar{
+            position: absolute;
+            background-color: blue;
+            width: 50%;
+            height: 100%;
+            top: 0;
+            transition: 1s;  
+        }
+        .controls .vol .dot{
+            position: absolute;
+            background-color: blue;
+            width: 7px;
+            height: 7px;
+            top: -2.75px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 3px 1px black;
+            transition: 1s;
+        }
+        .controls .vol .dot::before{
+            content: '';
+            position: absolute;
+            top: -5.4px;
+            left: -5.4px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            border: 1px solid aquamarine;
+            box-shadow: inset 0px 0px 3px 1px white;
+        }
+        .controls .vol input{
+            position: relative;
+            width: 100%;
+            top: -7.2px;
+            left: 0px;
+            cursor: pointer;
+            z-index: 99;
+            opacity: 0;
+        }
+        .controls span{
+            color: black;
+        }
+        .song nav{
+            width: 40%;
+            height: 10%;
+            /* border: 1px solid white; */
+            margin: 20px 0px 0px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .song nav ul{
+            display: flex;
+        }
+        .song nav ul li{
+            list-style: none;
+            position: relative;
+            font-size: 13px;
+            color: #4c5262;
+            margin-right: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .song nav ul li:hover{
+            color: black;
+        }
+        .song nav ul li span{
+            display: flex;
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: aqua;
+        }
+        .song nav .search{
+            position: relative;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            /* border: 1px solid white; */
+            border-radius: 25px;
+            color: white;
+            padding: 0px 120px 0px 10px;
+            height: 25px;
+            left: 70px;
+            background: rgba(0, 0, 0, 0.144);
+        }
+        .song nav .search input{
+            margin-left: 7px;
+            color: black;
+            background: none;
+            border: none;
+            outline: none;
+            font-size: 12px;
+        }
+        .song #mode{
+            color: black;
+            font-size: 30px;
+            margin-left: 100px;
+        }
+        .song .frame{
+            /* border: 1px solid white; */
+            margin: 15px 15px 0px 15px;
+            height: 400px;
+        }
+        .song .frame #vid1{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo1{
+            margin: 0px 42px 0px 42px;
+            width: 700px;
+            display: none;
+        }
+        .song .frame #vid2{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo2{
+            margin: 0px 0px 0px 80px;
+            width: 700px;
+            height: 395px;
+            display: none;
+        }
+        .song .frame #vid3{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo3{
+            margin: 0px 42px 0px 42px;
+            width: 700px;
+            display: none;
+        }
+        .song .frame #vid4{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo4{
+            margin: 0px 42px 0px 42px;
+            width: 700px;
+            display: none;
+        }
+        .song .frame #vid5{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo5{
+            margin: 0px 42px 0px 42px;
+            width: 700px;
+            display: none;
+        }
+        .song .frame #vid6{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo6{
+            margin: 0px 42px 0px 42px;
+            width: 700px;
+            display: none;
+        }
+        .song .frame #vid7{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo7{
+            margin: 0px 42px 0px 42px;
+            width: 700px;
+            display: none;
+        }
+        .song .frame #vid8{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo8{
+            margin: 0px 42px 0px 42px;
+            width: 700px;
+            display: none;
+        }
+        .song .frame #vid9{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo9{
+            margin: 0px 42px 0px 42px;
+            width: 700px;
+            display: none;
+        }
+        .song .frame #vid10{
+            width: 700px;
+            display: none;
+        }
+        .song .frame #mainvideo10{
+            margin: 0px 42px 0px 42px;
+            width: 700px;
+            display: none;
+        }
+        /* .song .row1{
+            display: none;
+        } */
+        .song .New{
+            width: 100%;
+            height: auto;
+            margin: auto;
+            margin-top: 15px;
+            /* border: 1px solid white; */
+        }
+        .song .row1 .New{
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .song .row1 .New .bi{
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .song .row1 .New .bi:hover{
+            font-size: 20px;
+        }
+        .song .row1 .newsong{
+            width: 100%;
+            height: 170px;
+            margin: auto;
+            /* border: 1px solid white; */
+            display: flex;
+            color: black;
+            padding-left: 10px;
+            overflow: auto;
+            scroll-behavior: smooth;
+            /* border: 1px solid white; */
+        }
+        .song .row1 .newsong::-webkit-scrollbar{
+            display: none;
+        }
+        .song .row1 .newsong li{
+            /* border: 1px solid white; */
+            cursor: pointer;
+            min-width: 105px;
+            height: 170px;
+            list-style: none;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+        .song .row1 .newsong li:hover h5{
+            display: none;
+        }
+        .song .row1 .newsong h5{
+            padding: 12px 0px 0px 5px;
+            font-size: 13px;
+        }
+        .song .row1 .newsong .subtitle{
+            padding: 0px 0px 0px 5px;
+            font-size: 12px;
+            color: #4c5262;
+        }
+        .song .row1 .newsong li .imgplay{
+            position: relative;
+            /* left: 250px; */
+            /* margin-left: 10px; */
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .song .row1 .newsong li .imgplay img{
+            width: 100px;
+            height: 110px;
+            transition: 0.3s;
+        }
+        .song .row1 .newsong li:hover .imgplay img{
+            transform: translateY(10px);
+            width: 120px;
+            height: 130px;
+        }
+        .song .row1 .newsong li .imgplay .bi{
+            position: absolute;
+            font-size: 30px;
+            opacity: 0;
+        }
+        .song .row1 .newsong li:hover .imgplay .bi{
+            opacity: 1;
+        }
+        .song .Pop{
+            width: 100%;
+            height: auto;
+            /* border: 1px solid white; */
+        }
+        .song .row1 .Pop{
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .song .row1 .Pop .bi{
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .song .row1 .Pop .bi:hover{
+            font-size: 20px;
+        }
+        .song .row1 .popartist{
+            width: 100%;
+            height: 120px;
+            /* border: 1px solid white; */
+            display: flex;
+            color: white;
+            overflow: auto;
+            scroll-behavior: smooth;
+        }
+        .song .row1 .popartist::-webkit-scrollbar{
+            display: none;
+        }
+        .song .row1 .popartist li{
+            cursor: pointer;
+            width: 100px;
+            height: 120px;
+            list-style: none;
+            margin-right: 10px;
+            transition: 0.3s;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .song .row1 .popartist li .imgart{
+            position: relative;
+            /* left: 250px; */
+            margin-left: 10px;
+            width: 100px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .song .row1 .popartist li .imgart img{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        #close{
+            color: black;
+            text-decoration: none;
+            width: 45px;
+            height: 45px;
+            font-size: 35px;
+            border: 1px solid white;
+            display: flex;
+            text-align: center;
+            background-color: white;
+            justify-content: center ;
+            position: relative;
+            top: -165px;
+            left: 1140px;
+            opacity: 0.2;
+            transition: 0.3s;
+        }
+        #close:hover{
+            width: 50px;
+            height: 50px;
+            font-size: 40px;
+            opacity: 1;
+        }
+    </style>    
+</head>
+
+<body>
+    <a href="mainPlayerL.html" id="close">x</a>
+        <header>
+        <div class="menu">
+            <h1>Playlist</h1>
+            <div class="playlist">
+                <h4 class="activemenu"><span class="bullet"></span><p><i class="bi bi-music-note-beamed"></i>Playlist</p></h4>
+                <h4 ><span class="bullet"></span><p><i class="bi bi-music-note-beamed"></i>Last Played</p></h4>
+                <h4 ><span class="bullet"></span><p><i class="bi bi-music-note-beamed"></i>Just For You</p></h4>
+            </div>
+            <div class="SongMenu">
+                <li class="songs">
+                    <span>01</span>
+                    <img src="\project\IMG\RaataLambeiyan.jpg" >
+                    <h5>Raata Lambeiyan<br><div class="subtitle">Arjit Singh</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="RaataLambeiyan" ></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid1','mainvideo1','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="songs">
+                    <span>02</span>
+                    <img src="\project\IMG\Raabta.jpg" >
+                    <h5>Raabta<br><div class="subtitle">Arjit Singh</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="Raabta"></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid2','mainvideo2','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="songs">
+                    <span>03</span>
+                    <img src="\project\IMG\TuHiHaqeeqat.jpg" >
+                    <h5>Tu Hi Haqeeqat<br><div class="subtitle">Pritam</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="TuHiHaqeeqat"></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid3','mainvideo3','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="songs">
+                    <span>04</span>
+                    <img src="\project\IMG\SunnRahaHai.jpg" >
+                    <h5>SunnRahaHai<br><div class="subtitle">Ankit Tiwari</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="SunnRahaHai"></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid4','mainvideo4','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="songs">
+                    <span>05</span>
+                    <img src="\project\IMG\ZaraSa.jpg" >
+                    <h5>Zara Sa<br><div class="subtitle">Pritam</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="ZaraSa"></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid5','mainvideo5','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="songs">
+                    <span>06</span>
+                    <img src="\project\IMG\Saiyaara.jpg" >
+                    <h5>Saiyaara<br><div class="subtitle">Sohail Sen</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="Saiyaara"></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid6','mainvideo6','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="songs">
+                    <span>07</span>
+                    <img src="\project\IMG\KabhiKabhiAditi.jpg" >
+                    <h5>Kabhi Kabhi Aditi<br><div class="subtitle">Rashid Ali</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="KabhiKabhiAditi"></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid7','mainvideo7','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="songs">
+                    <span>08</span>
+                    <img src="\project\IMG\Naah.jpg" >
+                    <h5>Naah<br><div class="subtitle">Harrdy Sandhu</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="Naah"></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid8','mainvideo8','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="songs">
+                    <span>09</span>
+                    <img src="\project\IMG\kiyaKiya.jpg" >
+                    <h5>Kiya Kiya<br><div class="subtitle">Anand Raj</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="kiyaKiya"></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid9','mainvideo9','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="songs">
+                    <span>10</span>
+                    <img src="\project\IMG\UffTeriAdaa.jpg" >
+                    <h5>Uff Teri Adaa<br><div class="subtitle">Shankar Mahadevan</div>
+                    </h5>
+                    <div class="play">
+                        <div class="play1">
+                            <i class="bi songplay bi-play-circle-fill" id="UffTeriAdaa"></i>
+                        </div>
+                        <div class="play2">
+                            <i class="bi vidplay bi-youtube" onclick="displayadd('vid10','mainvideo10','row1')"></i>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+        <div class="song">
+            <nav>
+                <ul>
+                    <li>DISCOVER<span></spans></li>
+                    <li>PODCAST<span></spans></li>
+                    <li>LIBRARY<span></spans></li>
+                    <li><a href="playlist.html" id="upload">NEW</a><span></spans></li>
+                    <li><a href="view.php" id="upload"><i class="bi bi-eye-fill"></i></a></li>
+                </ul>
+                <div class="search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="SEARCH MUSIC...">
+                </div>
+                <a href="mainPlayerD.html" id="mode"><i class="bi bi-moon"></i></a>
+            </nav>
+            <div class="frame">
+                <p id="vid1">
+                    <video controls id="mainvideo1">
+                        <source src="/project/VIDEO/RaataLambeiyan.mp4">
+                    </video>
+                </p>
+                <p id="vid2">
+                    <video controls id="mainvideo2">
+                        <source src="/project/VIDEO/Raabta.mp4">
+                    </video>
+                </p>
+                <p id="vid3">
+                    <video controls id="mainvideo3">
+                        <source src="/project/VIDEO/TuHiHaqeeqat.mp4">
+                    </video>
+                </p>
+                <p id="vid4">
+                    <video controls id="mainvideo4">
+                        <source src="/project/VIDEO/SunnRahaHai.mp4">
+                    </video>
+                </p>
+                <p id="vid5">
+                    <video controls id="mainvideo5">
+                        <source src="/project/VIDEO/ZaraSa.mp4">
+                    </video>
+                </p>
+                <p id="vid6">
+                    <video controls id="mainvideo6">
+                        <source src="/project/VIDEO/Saiyaara.mp4">
+                    </video>
+                </p>
+                <p id="vid7">
+                    <video controls id="mainvideo7">
+                        <source src="/project/VIDEO/KabhiKabhiAditi.mp4">
+                    </video>
+                </p>
+                <p id="vid8">
+                    <video controls id="mainvideo8">
+                        <source src="/project/VIDEO/Naah.mp4">
+                    </video>
+                </p>
+                <p id="vid9">
+                    <video controls id="mainvideo9">
+                        <source src="/project/VIDEO/KiyaKiya.mp4">
+                    </video>
+                </p>
+                <p id="vid10">
+                    <video controls id="mainvideo10">
+                        <source src="/project/VIDEO/UffTeriAdaa.mp4">
+                    </video>
+                </p>
+                <div class="row1">
+                    <div class="New">
+                        <h4>New Releases</h4>
+                        <div class="arrows">
+                            <i class="bi bi-chevron-left" id="nleft"></i>
+                            <i class="bi bi-chevron-right" id="nright"></i>
+                        </div>
+                    </div>
+                    <div class="newsong">
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/AjabSi.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="AjabSi"></i><br>
+                            </div>
+                            <h5>Ajab Si<div class="subtitle">KK</div>
+                            </h5>
+                        </li>
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/BarsoRe.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="BarsoRe"></i><br>
+                            </div>
+                            <h5>Barso Re<div class="subtitle">A.R. Rahman</div>
+                            </h5>
+                        </li>
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/AllahMaafKare.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="AllahMaafKare"></i><br>
+                            </div>
+                            <h5>Allah Maaf Kare<div class="subtitle">Pritam</div>
+                            </h5>
+                        </li>
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/TuAakeDekhle.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="TuAakeDekhle"></i><br>
+                            </div>
+                            <h5>Tu Aake Dekhle<div class="subtitle">King</div>
+                            </h5>
+                        </li>
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/SapnaJahan.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="SapnaJahan"></i><br>
+                            </div>
+                            <h5>Sapna Jahan<div class="subtitle">Ajay-Atul</div>
+                            </h5>
+                        </li>
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/MaanMeriJaan.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="MaanMeriJaan"></i><br>
+                            </div>
+                            <h5>Maan Meri Jaan<div class="subtitle">King</div>
+                            </h5>
+                        </li>
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/AaoMiloChalo.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="AaoMiloChalo"></i><br>
+                            </div>
+                            <h5>Aao Milo Chalo<div class="subtitle">Pritam</div>
+                            </h5>
+                        </li>    
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/DheereDheere.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="DheereDheere"></i><br>
+                            </div>
+                            <h5>Dheere Dheere<div class="subtitle">Yo Yo Honey Singh</div>
+                            </h5>
+                        </li>
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/Kesariya.jpg">                                    
+                                <i class="bi songplay bi-play-circle-fill" id="Kesariya"></i><br>
+                            </div>
+                            <h5>Kesariya<div class="subtitle">Pritam</div>
+                            </h5>
+                        </li>
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/Barbaadiyan.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="Barbaadiyan"></i><br>
+                            </div>
+                            <h5>Barbaadiyan<div class="subtitle">Sachet Tandon</div>
+                            </h5>
+                        </li>
+                        <li class="songs">
+                            <div class="imgplay">
+                                <img src="/project/IMG/Vaaste.jpg">
+                                <i class="bi songplay bi-play-circle-fill" id="Vaaste"></i><br>
+                            </div>
+                            <h5>Vaaste<div class="subtitle">Dhvani Bhanushali</div>
+                            </h5>
+                        </li>
+                    </div>
+                    <br><br>
+                    <div class="Pop">
+                        <h4>Popular Artists</h4>
+                        <div class="arrows">
+                            <i class="bi bi-chevron-left" id="pleft"></i>
+                            <i class="bi bi-chevron-right" id="pright"></i>
+                        </div>
+                    </div>
+                    <div class="popartist">
+                        <li>
+                            <div class="imgart">
+                                <img src="/project/IMG/1.jpg">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="imgart">
+                                <img src="/project/IMG/2.jpg">
+                            </div>
+                        </li>    
+                        <li>
+                            <div class="imgart">
+                                <img src="/project/IMG/3.jpg">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="imgart">
+                                <img src="/project/IMG/1.jpg">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="imgart">
+                                <img src="/project/IMG/2.jpg">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="imgart">
+                                <img src="/project/IMG/3.jpg">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="imgart">
+                                <img src="/project/IMG/1.jpg">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="imgart">
+                                <img src="/project/IMG/2.jpg">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="imgart">
+                                <img src="/project/IMG/3.jpg">
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <div class="wave" id="w">
+                <div class="a"></div>
+                <div class="a"></div>
+                <div class="a"></div>
+            </div>
+            <img src="/project/LOGO1.png" alt="" id="poster">
+            <div class="icons">
+                <i class="bi bi-skip-start-fill"></i>
+                <i class="bi bi-play-fill" id="MasterPlay"></i>
+                <i class="bi bi-skip-end-fill"></i>
+            </div>
+            <span id="stime">0:00</span>
+            <div class="music">
+                <input type="range" id="r1" min="0" max="100">
+                <div class="bar2" id="bar2"></div>
+                <div class="dot"></div>
+            </div>
+            <span id="etime">0:00</span>
+            <i class="bi bi-volume-up-fill" id="vup"></i>
+            <div class="vol">
+                <input type="range" id="r2" min="0" max="100">
+                <div class="bar1" id="bar1"></div>
+                <div class="dot1"></div>
+            </div>
+        </div>
+    </header>
+</body>
+<script>
+    const songdetail = [
+        {
+            id: 'RaataLambeiyan',
+            songName: 'Raata Lambeiyan <div class="subtitle">Arjit Singh</div>',
+            poster: "IMG/RaataLambeiyan.jpg",
+        },
+        {
+            id: 'Raabta',
+            songName: 'Raabta<br><div class="subtitle">Arjit Singh</div>',
+            poster: "IMG/Raabta.jpg",
+        },
+        {
+            id: 'TuHiHaqeeqat',
+            songName: 'Tu Hi Haqeeqat<br><div class="subtitle">Pritam</div>',
+            poster: "IMG/TuHiHaqeeqat.jpg",
+        },
+        {
+            id: 'SunnRahaHai',
+            songName: 'SunnRahaHai<br><div class="subtitle">Ankit Tiwari</div>',
+            poster: "IMG/SunnRahaHai.jpg",
+        },
+        {
+            id: 'ZaraSa',
+            songName: 'Zara Sa<br><div class="subtitle">Pritam</div>',
+            poster: "IMG/ZaraSa.jpg",
+        },
+        {
+            id: 'Saiyaara',
+            songName: 'Saiyaara<br><div class="subtitle">Sohail Sen</div>',
+            poster: "IMG/Saiyaara.jpg",
+        },
+        {
+            id: 'KabhiKabhiAditi',
+            songName: 'Kabhi Kabhi Aditi<br><div class="subtitle">Rashid Ali</div>',
+            poster: "IMG/KabhiKabhiAditi.jpg",
+        },
+        {
+            id: 'Naah',
+            songName: 'Naah<br><div class="subtitle">Harrdy Sandhu</div>',
+            poster: "IMG/Naah.jpg",
+        },
+        {
+            id: 'KiyaKiya',
+            songName: 'Kiya Kiya<br><div class="subtitle">Anand Raj</div>',
+            poster: "IMG/KiyaKiya.jpg",
+        },
+        {
+            id: 'UffTeriAdaa',
+            songName: 'Uff Teri Adaa<br><div class="subtitle">Shankar Mahadevan</div>',
+            poster: "IMG/UffTeriAdaa.jpg",
+        },
+        {
+            id: 'AjabSi',
+            songName: 'Ajab Si<div class="subtitle">KK</div>',
+            poster: "IMG/AjabSi.jpg",
+        },
+        {
+            id: 'BarsoRe',
+            songName: 'Barso Re<div class="subtitle">A.R. Rahman</div>',
+            poster: "IMG/BarsoRe.jpg",
+        },
+        {
+            id: 'AllahMaafKare',
+            songName: 'Allah Maaf Kare<div class="subtitle">Pritam</div>',
+            poster: "IMG/AllahMaafKare.jpg",
+        },
+        {
+            id: 'TuAakeDekhle',
+            songName: 'Tu Aake Dekhle<div class="subtitle">King</div>',
+            poster: "IMG/TuAakeDekhle.jpg",
+        },
+        {
+            id: 'SapnaJahan',
+            songName: 'Sapna Jahan<div class="subtitle">Ajay-Atul</div>',
+            poster: "IMG/SapnaJahan.jpg",
+        },
+        {
+            id: 'MaanMeriJaan',
+            songName: 'Maan Meri Jaan<div class="subtitle">King</div>',
+            poster: "IMG/MaanMeriJaan.jpg",
+        },
+        {
+            id: 'AaoMiloChalo',
+            songName: 'Aao Milo Chalo<div class="subtitle">Pritam</div>',
+            poster: "IMG/AaoMiloChalo.jpg",
+        },
+        {
+            id: 'DheereDheere',
+            songName: 'Dheere Dheere<div class="subtitle">Yo Yo Honey Singh</div>',
+            poster: "IMG/DheereDheere.jpg",
+        },
+        {
+            id: 'Kesariya',
+            songName: 'Kesariya<div class="subtitle">Pritam</div>',
+            poster: "IMG/Kesariya.jpg",
+        },
+        {
+            id: 'Barbaadiyan',
+            songName: 'Barbaadiyan<div class="subtitle">Sachet Tandon</div>',
+            poster: "IMG/Barbaadiyan.jpg",
+        },
+        {
+            id: 'Vaaste',
+            songName: 'Vaaste<div class="subtitle">Dhvani Bhanushali</div>',
+            poster: "IMG/Vaaste.jpg",
+        },
+    ]  
+
+Array.from(document.getElementsByClassName('songs')).forEach((e, i) =>{
+    e.getElementsByTagName('img')[0].src = songdetail[i].poster;
+    e.getElementsByTagName('h5')[0].innerHTML = songdetail[i].songName;
+});
+
+let newleft = document.getElementById('nleft');
+    let newright = document.getElementById('nright');
+    let newsongs = document.querySelectorAll('.newsong');
+
+    newright.addEventListener('click', () => {
+        newsongs.forEach(newsong => {
+            newsong.scrollLeft += 300;
+        });
+    });
+    newleft.addEventListener('click', () => {
+        newsongs.forEach(newsong => {
+            newsong.scrollLeft -= 300;
+        });
+    });
+
+
+    let popleft = document.getElementById('pleft');
+    let popright = document.getElementById('pright');
+    let popartists = document.querySelectorAll('.popartist');
+
+    popright.addEventListener('click', () => {
+        popartists.forEach(popartist => {
+            popartist.scrollLeft += 300;
+        });
+    });
+    popleft.addEventListener('click', () => {
+        popartists.forEach(popartist => {
+            popartist.scrollLeft -= 300;
+        });
+    });
+    const music = new Audio('AUDIO/Naah.mp3');
+    let play = document.getElementById('MasterPlay');
+    let wave = document.getElementById('w');
+    play.addEventListener('click',() => {
+        if (music.paused || music.currentTime<=0) {
+            music.play();
+            w.classList.add('activewave');
+            MasterPlay.classList.remove('bi-play-fill');
+            MasterPlay.classList.add('bi-pause-fill');
+        } else {
+            music.pause();
+            w.classList.remove('activewave');
+            MasterPlay.classList.add('bi-play-fill');
+            MasterPlay.classList.remove('bi-pause-fill');
+        }
+    });
+
+
+    let index='';
+    let poster=document.getElementById('poster');
+    Array.from(document.getElementsByClassName('songplay')).forEach((e) => {
+        e.addEventListener('click',(el) => { 
+            index = el.target.id;
+            music.src = `AUDIO/${index}.mp3`;
+            poster.src = `IMG/${index}.jpg`;
+            music.play();
+            w.classList.add('activewave');
+            MasterPlay.classList.remove('bi-play-fill');
+            MasterPlay.classList.add('bi-pause-fill');
+        })
+    });
+
+    function displayadd(vid, mainvideo, row1) {
+        document.getElementById(vid).style.display = 'flex';
+        document.getElementById(mainvideo).style.display = 'flex';
+        const elements = document.getElementsByClassName(row1);
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.display = 'none';
+        }
+        music.pause();
+            w.classList.remove('activewave');
+            MasterPlay.classList.add('bi-play-fill');
+            MasterPlay.classList.remove('bi-pause-fill');
+    }
+    
+    let currentStart = document.getElementById('stime');
+    let currentEnd = document.getElementById('etime');
+    let r1 = document.getElementById('r1');
+    let bar2 = document.getElementById('bar2');
+    let dot = document.getElementsByClassName('dot')[0];
+    music.addEventListener('timeupdate',()=>{
+        let music_cur = music.currentTime;
+        let music_dur = music.duration;
+
+        let m1 = Math.floor(music_dur/60);
+        let s1 = Math.floor(music_dur%60);
+        if(s1<10){
+            s1 = `0${s1}`;
+        }
+        currentEnd.innerText = `${m1}:${s1}`;
+        
+        
+        let m2 = Math.floor(music_cur/60);
+        let s2 = Math.floor(music_cur%60);
+        if(s2<10){
+            s2 = `0${s2}`;
+        }
+        currentStart.innerText = `${m2}:${s2}`;
+
+        let progressbar = parseInt((music_cur / music_dur)*100);
+        r1.value = progressbar;
+        let seekbar = r1.value;
+        bar2.style.width = `${seekbar}%`;
+        dot.style.left = `${seekbar}%`;
+    });
+
+    r1.addEventListener('change',() =>{
+        music.currentTime = r1.value*music.duration/100;
+    });
+
+    let r2 = document.getElementById('r2');
+    let bar1 = document.getElementsById('bar1');
+    let dot1 = document.getElementsByClassName('dot1')[0];
+
+    r2.addEventListener('change', () => {
+        let volbar = r2.value;
+        bar1.style.width = `${volbar}%`;
+        dot1.style.left = `${volbar}%`;
+        music.volume = volbar / 100;
+    });
+
+
+
+
+
+</script>
+</html>
